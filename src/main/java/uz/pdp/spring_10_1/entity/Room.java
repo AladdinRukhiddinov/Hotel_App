@@ -10,12 +10,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Data
 @Entity(name = "rooms")
+@Table(uniqueConstraints =
+@UniqueConstraint(name = "UniqueRoomNumberAndRoomHotel", columnNames = {"number", "hotel_id"}))
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, name = "number")
     private Integer number;
 
     @Column(nullable = false)
@@ -25,5 +27,6 @@ public class Room {
     private String size;
 
     @ManyToOne
+    @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 }
